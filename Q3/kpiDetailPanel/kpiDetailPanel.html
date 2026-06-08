@@ -1,0 +1,92 @@
+<template>
+  <div
+    class="slds-box slds-theme_shade slds-m-top_medium slds-is-relative"
+    style="min-height: 150px"
+  >
+    <template lwc:if={isLoading}>
+      <lightning-spinner
+        alternative-text="Loading top opportunities..."
+        size="medium"
+        variant="brand"
+      >
+      </lightning-spinner>
+    </template>
+
+    <h2 class="slds-text-heading_medium slds-m-bottom_medium">
+      Top 5 Opportunities:
+      <span class="slds-text-color_weak">{panelTitle}</span>
+    </h2>
+
+    <template lwc:if={hasRecords}>
+      <div class="slds-table_header-fixed_container">
+        <table
+          class="slds-table slds-table_bordered slds-table_cell-buffer slds-no-row-hover"
+        >
+          <thead>
+            <tr class="slds-line-height_reset">
+              <th scope="col">
+                <div class="slds-truncate" title="Opportunity Name">
+                  Opportunity Name
+                </div>
+              </th>
+              <th scope="col">
+                <div class="slds-truncate" title="Stage">Stage</div>
+              </th>
+              <th scope="col" class="slds-text-align_right">
+                <div class="slds-truncate" title="Amount">Amount</div>
+              </th>
+              <th scope="col">
+                <div class="slds-truncate" title="Close Date">Close Date</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <template for:each={opportunities} for:item="opp">
+              <tr key={opp.Id} class="slds-hint-parent">
+                <td data-label="Opportunity Name">
+                  <div
+                    class="slds-truncate slds-font-weight_bold"
+                    title={opp.Name}
+                  >
+                    {opp.Name}
+                  </div>
+                </td>
+                <td data-label="Stage">
+                  <div class="slds-truncate" title={opp.StageName}>
+                    {opp.StageName}
+                  </div>
+                </td>
+                <td data-label="Amount" class="slds-text-align_right">
+                  <div
+                    class="slds-truncate slds-text-color_success"
+                    title={opp.formattedAmount}
+                  >
+                    {opp.formattedAmount}
+                  </div>
+                </td>
+                <td data-label="Close Date">
+                  <div class="slds-truncate" title={opp.CloseDate}>
+                    {opp.CloseDate}
+                  </div>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </template>
+
+    <template lwc:else>
+      <template lwc:if={isLoading}> </template>
+      <template lwc:else>
+        <div
+          class="slds-align_absolute-center slds-p-vertical_large slds-flex_column"
+        >
+          <p class="slds-text-heading_small slds-text-color_weak">
+            No matching opportunities found for this filter context.
+          </p>
+        </div>
+      </template>
+    </template>
+  </div>
+</template>

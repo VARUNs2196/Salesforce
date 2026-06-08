@@ -1,0 +1,8 @@
+<template>
+    <div class="slds-grid slds-gutters" oncarddropped={handleCardDropped}>
+        <c-kanban-column-new cases={newCases} is-loading={isNewLoading} class="slds-col"></c-kanban-column-new>
+        <c-kanban-column-working cases={workingCases} is-loading={isWorkingLoading} class="slds-col"></c-kanban-column-working>
+        <c-kanban-column-escalated cases={escalatedCases} is-loading={isEscalatedLoading} class="slds-col"></c-kanban-column-escalated>
+        <c-kanban-column-closed cases={closedCases} is-loading={isClosedLoading} class="slds-col"></c-kanban-column-closed>
+    </div>
+</template>

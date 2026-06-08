@@ -1,0 +1,41 @@
+<template>
+  <lightning-card title="Invoice Generator" icon-name="standard:invoice">
+    <div class="slds-p-horizontal_medium slds-is-relative">
+      <template if:true={isLoading}>
+        <lightning-spinner
+          alternative-text="Generating Invoice..."
+          size="medium"
+        ></lightning-spinner>
+      </template>
+
+      <template if:true={invoiceUrl}>
+        <iframe
+          src={invoiceUrl}
+          width="100%"
+          height="600px"
+          title="Invoice Preview"
+        ></iframe>
+      </template>
+
+      <template if:true={loaded}>
+        <h1 class="slds-m-top_medium">Line Items</h1>
+        <lightning-datatable
+          key-field="Id"
+          data={oppLineItems}
+          columns={columns}
+          draft-values={draftValues}
+          onsave={handleSave}
+          class="slds-m-top_medium"
+        ></lightning-datatable>
+        <div class="slds-m-top_small">
+          <lightning-button
+            label="Generate Invoice"
+            variant="brand"
+            onclick={handleGenerateInvoice}
+            class="slds-m-bottom_small"
+          ></lightning-button>
+        </div>
+      </template>
+    </div>
+  </lightning-card>
+</template>

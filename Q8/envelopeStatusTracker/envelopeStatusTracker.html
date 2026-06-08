@@ -1,0 +1,47 @@
+<template>
+    <lightning-card title="DocuSign Document Tracker" icon-name="custom:custom62">
+        <div class="slds-var-m-around_medium">
+            <div class={bannerClass} role="alert">
+                <span class="slds-assistive-text">{status}</span>
+                <h2>Current Status: <strong>{status}</strong></h2>
+            </div>
+            <template if:true={isProcessing}>
+                <div class="slds-var-m-vertical_medium slds-is-relative" style="height: 50px;">
+                    <lightning-spinner alternative-text="Processing signed document..." size="small"></lightning-spinner>
+                </div>
+            </template>
+            <template if:true={isFailed}>
+                <div class="slds-var-m-top_medium slds-notify slds-notify_alert slds-alert_error">
+                    <p class="slds-var-m-bottom_small">Document sync or splitting failed. Please try again.</p>
+                    <lightning-button 
+                        label="Retry Processing" 
+                        variant="destructive" 
+                        icon-name="utility:refresh"
+                        onclick={handleRetry}>
+                    </lightning-button>
+                </div>
+            </template>
+            <template if:true={isCompleted}>
+                <div class="slds-var-m-top_medium">
+                    <p class="slds-text-color_success">
+                        Success! Document split into <strong>{documentCount}</strong> parts and saved to Files.
+                    </p>
+                </div>
+            </template>
+            <template if:true={splitDocuments.length}>
+                <div class="slds-var-m-top_medium">
+                    <h3 class="slds-text-heading_small slds-var-m-bottom_small">Split Documents:</h3>
+                    <ul>
+                        <template for:each={splitDocuments} for:item="doc">
+                            <li key={doc.id} class="slds-var-m-bottom_x-small">
+                                <lightning-icon icon-name="doctype:pdf" size="x-small" class="slds-var-m-right_x-small"></lightning-icon>
+                                <a href={doc.downloadUrl} download>{doc.title}</a>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

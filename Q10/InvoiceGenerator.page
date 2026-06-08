@@ -1,0 +1,69 @@
+<apex:page Controller="InvoiceController" renderAs="pdf" showHeader="false" sidebar="false" applyHtmlTag="false"
+            applyBodyTag="false" docType="html-5.0">
+<head>
+    <Style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .invoice-container {
+            width: 100%;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .line-items-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .line-items-table th, .line-items-table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        .line-items-table th {
+            background-color: #f2f2f2;
+        }
+        .totals {
+            margin-top: 20px;
+            text-align: right;
+        }
+    </Style>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="header">
+            <h1>Invoice</h1>
+            <p>Date: {!TODAY()}</p>
+        </div>
+        <table class="line-items-table">
+            <thead>
+                <tr>
+                    <th>Invoice</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Tax Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!lineItems}" var="line">
+                    <tr>
+                        <td>{!line.Invoice__r.Name}</td>
+                        <td>{!line.Product_Name__c}</td>
+                        <td>{!line.Quantity__c}</td>
+                        <td>{!line.Unit_Price__c}</td>
+                        <td>{!line.Tax_Rate__c}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+    </div></body>
+</apex:page>
